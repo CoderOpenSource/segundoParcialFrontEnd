@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">Gestionar Usuarios</h1>
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Apellido</th>
+        <th class="py-2 px-4 border-b">Correo Electrónico</th>
+        <th class="py-2 px-4 border-b">Rol</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td class="py-2 px-4 border-b">{{ user.id }}</td>
+        <td class="py-2 px-4 border-b">{{ user.nombre }}</td>
+        <td class="py-2 px-4 border-b">{{ user.apellido }}</td>
+        <td class="py-2 px-4 border-b">{{ user.email }}</td>
+        <td class="py-2 px-4 border-b">{{ user.rol.nombre }}</td>
+        <td class="py-2 px-4 border-b">
+          <button (click)="editUser(user.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDeleteUser(user.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="addUser()" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4">Añadir Usuario</button>
+  <div *ngIf="toastMessage" class="mt-4 p-2 rounded {{ toastClass }}">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<app-user-modal *ngIf="showModal" [user]="selectedUser" [isEditMode]="isEditMode" (closeModal)="handleCloseModal()" (saveUser)="saveUser($event)"></app-user-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" [message]="'¿Está seguro que desea eliminar este usuario?'" (confirm)="deleteUser()" (cancel)="cancelDelete()"></app-confirm-modal>

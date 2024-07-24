@@ -1,0 +1,73 @@
+<div class="container mt-5">
+  <h2 class="text-center">Generar Reporte</h2>
+  <div class="form-group">
+    <label for="tipoReporte">Tipo de Reporte</label>
+    <select [(ngModel)]="selectedTipoReporte" class="form-control" id="tipoReporte">
+      <option [ngValue]="null" disabled selected>Seleccione un tipo de reporte</option>
+      <option *ngFor="let tipo of tiposReporte" [ngValue]="tipo.id">{{ tipo.nombre }}</option>
+    </select>
+  </div>
+  <div class="form-group mt-3">
+    <label for="fechaInicio">Fecha Inicio</label>
+    <input type="date" [(ngModel)]="fechaInicio" class="form-control" id="fechaInicio">
+  </div>
+  <div class="form-group mt-3">
+    <label for="fechaFin">Fecha Fin</label>
+    <input type="date" [(ngModel)]="fechaFin" class="form-control" id="fechaFin">
+  </div>
+  <div class="form-group mt-3">
+    <label for="materia">Materia</label>
+    <select [(ngModel)]="selectedMateria" class="form-control" id="materia">
+      <option [ngValue]="null" disabled selected>Seleccione una materia</option>
+      <option *ngFor="let materia of materias" [ngValue]="materia.nombre">{{ materia.nombre }}</option>
+    </select>
+  </div>
+  <div class="form-group mt-3">
+    <label for="docente">Docente</label>
+    <select [(ngModel)]="selectedDocente" class="form-control" id="docente">
+      <option [ngValue]="null" disabled selected>Seleccione un docente</option>
+      <option *ngFor="let docente of docentes" [ngValue]="docente.nombre">{{ docente.nombre }} {{ docente.apellido }} </option>
+    </select>
+  </div>
+  <div class="mt-3">
+    <button (click)="generateReport('pdf')" [disabled]="generatingReport" class="btn btn-primary btn-block">Generar PDF</button>
+    <button (click)="generateReport('excel')" [disabled]="generatingReport" class="btn btn-success btn-block">Generar Excel</button>
+  </div>
+
+  <h2 class="mt-5 text-center">Reportes Generados</h2>
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha Generación</th>
+        <th>Periodo</th>
+        <th>Tipo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reporte of reportes">
+        <td>{{ reporte.id }}</td>
+        <td>{{ reporte.fechaGeneracion | date: 'short' }}</td>
+        <td>{{ reporte.periodo }}</td>
+        <td>{{ reporte.tipoReporteNombre }}</td>
+        <td>
+          <!--<a *ngIf="reporte.pdfPath" [href]="'http://68.183.146.53/static/reports/' + reporte.pdfPath.split('/').pop()" target="_blank" class="btn-yellow">Ver Reporte</a>
+          <a *ngIf="reporte.excelPath" [href]="'http://68.183.146.53/static/reports/' + reporte.excelPath.split('/').pop()" target="_blank" class="btn-yellow">Ver Reporte</a>
+        -->
+          <button (click)="openDeleteModal(reporte.id)" class="btn btn-sm btn-danger">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal" [class.show]="showDeleteModal">
+  <div class="modal-content">
+    <h3>Confirmar Eliminación</h3>
+    <p>¿Estás seguro de que quieres eliminar este reporte?</p>
+    <button (click)="confirmDelete()" class="btn btn-primary">Aceptar</button>
+    <button (click)="closeDeleteModal()" class="btn btn-secondary">Cancelar</button>
+  </div>
+</div>

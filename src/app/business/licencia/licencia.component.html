@@ -1,0 +1,49 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">Gestionar Licencias</h1>
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Docente</th>
+        <th class="py-2 px-4 border-b">Programación Académica</th>
+        <th class="py-2 px-4 border-b">Fecha</th>
+        <th class="py-2 px-4 border-b">Motivo</th>
+        <th class="py-2 px-4 border-b">Foto Licencia</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let licencia of licencias">
+        <td class="py-2 px-4 border-b">{{ licencia.id }}</td>
+        <td class="py-2 px-4 border-b">{{ getNombreDocente(licencia.docenteId) }} {{ getApellido(licencia.docenteId) }}</td>
+        <td class="py-2 px-4 border-b">{{ getProgramacionDescripcion(licencia.programacionAcademicaId) }}</td>
+        <td class="py-2 px-4 border-b">{{ licencia.fecha }}</td>
+        <td class="py-2 px-4 border-b">{{ licencia.motivo }}</td>
+        <td class="py-2 px-4 border-b">
+          <img *ngIf="licencia.fotoLicencia" [src]="licencia.fotoLicencia" alt="Foto Licencia" class="h-16 w-16 object-cover">
+        </td>
+        <td class="py-2 px-4 border-b">
+          <button *ngIf="licencia.id !== null" (click)="editLicencia(licencia.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button *ngIf="licencia.id !== null" (click)="confirmDelete(licencia.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="addLicencia()" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4">Añadir Licencia</button>
+  <div *ngIf="toastMessage" class="mt-4 p-2 rounded {{ toastClass }}">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<app-licencia-modal
+  *ngIf="showModal"
+  [licencia]="selectedLicencia"
+  [isEditMode]="isEditMode"
+  [docentes]="docentes"
+  [programaciones]="programaciones"
+  (closeModal)="handleCloseModal()"
+  (saveLicencia)="saveLicencia($event)"
+  (fileSelected)="onFileSelected($event)">
+</app-licencia-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" [message]="'¿Está seguro que desea eliminar esta licencia?'" (confirm)="deleteLicencia()" (cancel)="cancelDelete()"></app-confirm-modal>

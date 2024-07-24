@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4 text-center">Gestionar Departamentos</h1>
+
+  <table class="min-w-full bg-white text-center">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let departamento of departamentos">
+        <td class="py-2 px-4 border-b">{{ departamento.id }}</td>
+        <td class="py-2 px-4 border-b">{{ departamento.nombre }}</td>
+        <td class="py-2 px-4 border-b">
+          <button (click)="editDepartamento(departamento.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDelete(departamento.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-start mt-4">
+    <button (click)="addDepartamento()" class="bg-green-500 text-white px-4 py-2 rounded-md">Añadir Departamento</button>
+  </div>
+</div>
+
+<app-departamento-modal *ngIf="showModal" [departamento]="selectedDepartamento" [isEditMode]="isEditMode" (closeModal)="handleCloseModal()" (saveDepartamento)="saveDepartamento($event)"></app-departamento-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" (confirm)="deleteDepartamento()" (cancel)="handleCloseConfirmModal()"></app-confirm-modal>
+
+<!-- Toast Notification -->
+<div *ngIf="toastMessage" [ngClass]="toastClass" class="fixed bottom-4 left-4 px-4 py-2 rounded shadow-lg">
+  {{ toastMessage }}
+</div>

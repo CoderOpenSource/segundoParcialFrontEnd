@@ -1,0 +1,48 @@
+<div class="container mx-auto px-4 py-8 relative">
+  <h1 class="text-2xl font-bold mb-4 text-center">Gestionar Docentes</h1>
+
+  <table class="min-w-full bg-white text-center">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Apellido</th>
+        <th class="py-2 px-4 border-b">Email</th>
+        <th class="py-2 px-4 border-b">Departamento</th>
+        <th class="py-2 px-4 border-b">Programaciones</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let docente of docentes">
+        <td class="py-2 px-4 border-b">{{ docente.id }}</td>
+        <td class="py-2 px-4 border-b">{{ docente.nombre }}</td>
+        <td class="py-2 px-4 border-b">{{ docente.apellido }}</td>
+        <td class="py-2 px-4 border-b">{{ docente.email }}</td>
+        <td class="py-2 px-4 border-b">{{ getDepartamentoNombre(docente.departamentoId) }}</td>
+        <td class="py-2 px-4 border-b">
+          <ul>
+            <li *ngFor="let programacionId of docente.programacionAcademicaIds">{{ getProgramacionDescripcion(programacionId) }}</li>
+          </ul>
+        </td>
+        <td class="py-2 px-4 border-b">
+          <button (click)="editDocente(docente.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDelete(docente.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-start mt-4">
+    <button (click)="addDocente()" class="bg-green-500 text-white px-4 py-2 rounded-md">Añadir Docente</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div *ngIf="toastMessage" [ngClass]="toastClass" class="mt-4">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<app-docente-modal *ngIf="showModal" [docente]="selectedDocente" [isEditMode]="isEditMode" (closeModal)="handleCloseModal()" (saveDocente)="saveDocente($event)"></app-docente-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" [message]="confirmMessage" (confirm)="deleteDocente()" (cancel)="handleCloseConfirmModal()"></app-confirm-modal>

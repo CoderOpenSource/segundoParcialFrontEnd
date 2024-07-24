@@ -1,0 +1,60 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4 text-center">Gestionar Asistencias</h1>
+  <table class="min-w-full bg-white text-sm">
+    <thead>
+      <tr>
+        <th class="py-1 px-2 border-b">ID</th>
+        <th class="py-1 px-2 border-b">Programación Académica</th>
+        <th class="py-1 px-2 border-b">Estado Asistencia</th>
+        <th class="py-1 px-2 border-b">Docente</th>
+        <th class="py-1 px-2 border-b">Fecha</th>
+        <th class="py-1 px-2 border-b">Observaciones</th>
+
+        <th class="py-1 px-2 border-b">Latitud</th>
+        <th class="py-1 px-2 border-b">Longitud</th>
+        <th class="py-1 px-2 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let asistencia of asistencias">
+        <td class="py-1 px-2 border-b">{{ asistencia.id }}</td>
+        <td class="py-1 px-2 border-b">{{ getNombreProgramacionAcademica(asistencia.programacionAcademicaId) }}</td>
+        <td class="py-1 px-2 border-b">{{ getNombreEstadoAsistencia(asistencia.estadoAsistenciaId) }}</td>
+        <td class="py-1 px-2 border-b">{{ getNombreDocente(asistencia.docenteId) }}</td>
+        <td class="py-1 px-2 border-b">{{ asistencia.fecha }}</td>
+        <td class="py-1 px-2 border-b">{{ asistencia.observaciones }}</td>
+
+        <td class="py-1 px-2 border-b">{{ asistencia.latitud }}</td>
+        <td class="py-1 px-2 border-b">{{ asistencia.longitud }}</td>
+        <td class="py-1 px-2 border-b">
+          <div class="flex flex-col">
+            <button (click)="editAsistencia(asistencia.id)" class="bg-blue-500 text-white px-2 py-1 rounded-md mb-1">Editar</button>
+            <button (click)="confirmDelete(asistencia.id)" class="bg-red-500 text-white px-2 py-1 rounded-md">Eliminar</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="addAsistencia()" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4">Añadir Asistencia</button>
+  <div *ngIf="toastMessage" class="mt-4 p-2 rounded {{ toastClass }}">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<app-asistencia-modal *ngIf="showModal"
+  [asistencia]="selectedAsistencia"
+  [isEditMode]="isEditMode"
+  [programacionesAcademicas]="programacionesAcademicas"
+  [docentes]="docentes"
+  [materias]="materias"
+  [sesionesClase]="sesionesClase"
+  [aulas]="aulas"
+  (closeModal)="handleCloseModal()"
+  (saveAsistencia)="saveAsistencia($event)">
+</app-asistencia-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal"
+  [message]="'¿Está seguro que desea eliminar esta asistencia?'"
+  (confirm)="deleteAsistencia()"
+  (cancel)="cancelDelete()">
+</app-confirm-modal>

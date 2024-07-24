@@ -1,0 +1,42 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4 text-center">Gestionar Aulas</h1>
+
+  <table class="min-w-full bg-white text-center">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Latitud</th>
+        <th class="py-2 px-4 border-b">Longitud</th>
+        <th class="py-2 px-4 border-b">Facultad</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aula of aulas">
+        <td class="py-2 px-4 border-b">{{ aula.id }}</td>
+        <td class="py-2 px-4 border-b">{{ aula.nombre }}</td>
+        <td class="py-2 px-4 border-b">{{ aula.latitud }}</td>
+        <td class="py-2 px-4 border-b">{{ aula.longitud }}</td>
+        <td class="py-2 px-4 border-b">{{ getFacultadNombre(aula.facultadId) }}</td>
+        <td class="py-2 px-4 border-b">
+          <button (click)="editAula(aula.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDelete(aula.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-start mt-4">
+    <button (click)="addAula()" class="bg-green-500 text-white px-4 py-2 rounded-md">Añadir Aula</button>
+  </div>
+</div>
+
+<app-aula-modal *ngIf="showModal" [aula]="selectedAula" [facultades]="facultades" [isEditMode]="isEditMode" (closeModal)="handleCloseModal()" (saveAula)="saveAula($event)"></app-aula-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" (confirm)="deleteAula()" (cancel)="handleCloseConfirmModal()"></app-confirm-modal>
+
+<!-- Toast Notification -->
+<div *ngIf="toastMessage" [ngClass]="toastClass" class="toast">
+  {{ toastMessage }}
+</div>

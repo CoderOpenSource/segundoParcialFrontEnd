@@ -1,0 +1,30 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">Gestionar Estados de Asistencia</h1>
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estadoAsistencia of estadosAsistencia">
+        <td class="py-2 px-4 border-b">{{ estadoAsistencia.id }}</td>
+        <td class="py-2 px-4 border-b">{{ estadoAsistencia.nombre }}</td>
+        <td class="py-2 px-4 border-b">
+          <button (click)="editEstadoAsistencia(estadoAsistencia.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDelete(estadoAsistencia.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="addEstadoAsistencia()" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4">Añadir Estado de Asistencia</button>
+  <div *ngIf="toastMessage" class="mt-4 p-2 rounded {{ toastClass }}">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<app-estado-asistencia-modal *ngIf="showModal" [estadoAsistencia]="selectedEstadoAsistencia" [isEditMode]="isEditMode" (closeModal)="handleCloseModal()" (saveEstadoAsistencia)="saveEstadoAsistencia($event)"></app-estado-asistencia-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" [message]="'¿Está seguro que desea eliminar este estado de asistencia?'" (confirm)="deleteEstadoAsistencia()" (cancel)="cancelDelete()"></app-confirm-modal>

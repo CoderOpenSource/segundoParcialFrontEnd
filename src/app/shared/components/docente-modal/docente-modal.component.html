@@ -1,0 +1,50 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" (click)="onClose()">
+  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white" (click)="$event.stopPropagation()">
+    <h3 class="mt-3 text-center text-blue-700 font-bold">{{ isEditMode ? 'Editar Docente' : 'Añadir Docente' }}</h3>
+    <div class="mt-4">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="nombre">Nombre</label>
+        <input [(ngModel)]="docente.nombre" placeholder="Ingrese el nombre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="apellido">Apellido</label>
+        <input [(ngModel)]="docente.apellido" placeholder="Ingrese el apellido" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+        <input [(ngModel)]="docente.email" placeholder="Ingrese el email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="contrasena">Contraseña</label>
+        <input [(ngModel)]="docente.contrasena" placeholder="Ingrese la contraseña" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="departamento">Departamento</label>
+        <select [(ngModel)]="docente.departamentoId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option [ngValue]="null" disabled>Seleccione un departamento</option>
+          <option *ngFor="let departamento of departamentos" [ngValue]="departamento.id">{{ departamento.nombre }}</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="programaciones">Programaciones</label>
+        <div *ngIf="programaciones.length > 0; else noProgramaciones">
+          <div *ngFor="let programacion of programaciones">
+            <input type="checkbox" [checked]="isProgramacionSelected(programacion)" (change)="toggleProgramacionSelection(programacion)"> {{ getProgramacionDescripcion(programacion) }}
+          </div>
+        </div>
+        <ng-template #noProgramaciones>
+          <p>Aún no hay programaciones</p>
+        </ng-template>
+      </div>
+    </div>
+    <div class="flex items-center justify-between px-4 py-3 space-x-4">
+      <button (click)="onSave()" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md shadow-sm w-1/2">Guardar</button>
+      <button (click)="onClose()" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md shadow-sm w-1/2">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div *ngIf="toastMessage" [ngClass]="toastClass" class="fixed bottom-4 left-4 px-4 py-2 rounded shadow-lg">
+  {{ toastMessage }}
+</div>

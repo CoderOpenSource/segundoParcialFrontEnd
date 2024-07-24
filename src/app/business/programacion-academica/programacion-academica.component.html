@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">Gestionar Programaciones Académicas</h1>
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Materia</th>
+        <th class="py-2 px-4 border-b">Aula</th>
+        <th class="py-2 px-4 border-b">Sesión Clase</th>
+        <th class="py-2 px-4 border-b">Grupo</th> <!-- Nuevo Campo -->
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let programacionAcademica of programacionesAcademicas">
+        <td class="py-2 px-4 border-b">{{ programacionAcademica.id }}</td>
+        <td class="py-2 px-4 border-b">{{ getNombreMateria(programacionAcademica.materiaId) }}</td>
+        <td class="py-2 px-4 border-b">{{ getNombreAula(programacionAcademica.aulaId) }}</td>
+        <td class="py-2 px-4 border-b">{{ getFormattedSesionClase(programacionAcademica.sesionClaseIds) }}</td>
+        <td class="py-2 px-4 border-b">{{ programacionAcademica.grupo }}</td> <!-- Nuevo Campo -->
+        <td class="py-2 px-4 border-b">
+          <button (click)="editProgramacionAcademica(programacionAcademica.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDelete(programacionAcademica.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="addProgramacionAcademica()" class="bg-green-500 text-white px-4 py-2 rounded-md mt-4">Añadir Programación Académica</button>
+  <div *ngIf="toastMessage" class="mt-4 p-2 rounded {{ toastClass }}">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<app-programacion-academica-modal *ngIf="showModal" [programacionAcademica]="selectedProgramacionAcademica" [isEditMode]="isEditMode" [materias]="materias" [aulas]="aulas" [sesionesClase]="sesionesClase" (closeModal)="handleCloseModal()" (saveProgramacionAcademica)="saveProgramacionAcademica($event)"></app-programacion-academica-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" [message]="'¿Está seguro que desea eliminar esta programación académica?'" (confirm)="deleteProgramacionAcademica()" (cancel)="cancelDelete()"></app-confirm-modal>

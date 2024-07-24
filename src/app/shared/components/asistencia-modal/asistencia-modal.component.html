@@ -1,0 +1,51 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
+  <div class="bg-white rounded-lg w-1/3 p-4">
+    <h2 class="text-xl font-bold mb-4">{{ isEditMode ? 'Editar Asistencia' : 'Añadir Asistencia' }}</h2>
+    <form (ngSubmit)="handleSave()">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Programación Académica</label>
+        <select [(ngModel)]="asistencia.programacionAcademicaId" name="programacionAcademicaId" (change)="onProgramacionChange()" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="0" disabled>Selecciona la Programación Académica</option>
+          <option *ngFor="let programacion of programacionesAcademicas" [value]="programacion.id">{{ getProgramacionDescripcion(programacion) }}</option>
+        </select>
+        <div *ngIf="selectedProgramacion">
+          <p><strong>Materia:</strong> {{ getNombreMateria(selectedProgramacion.materiaId) }}</p>
+          <p><strong>Aula:</strong> {{ getNombreAula(selectedProgramacion.aulaId) }}</p>
+          <p><strong>Horarios:</strong> {{ getFormattedSesionClase(selectedProgramacion.sesionClaseIds) }}</p>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Docente</label>
+        <select [(ngModel)]="asistencia.docenteId" name="docenteId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="0" disabled>Selecciona el Docente</option>
+          <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nombre }} {{docente.apellido}}</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Fecha</label>
+        <input type="datetime-local" [(ngModel)]="asistencia.fecha" name="fecha" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Observaciones</label>
+        <input type="text" [(ngModel)]="asistencia.observaciones" name="observaciones" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Latitud</label>
+        <input type="number" [(ngModel)]="asistencia.latitud" name="latitud" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [readonly]="false">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Longitud</label>
+        <input type="number" [(ngModel)]="asistencia.longitud" name="longitud" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [readonly]="false">
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Guardar
+        </button>
+        <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="handleClose()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

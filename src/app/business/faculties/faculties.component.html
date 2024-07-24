@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4 text-center">Gestionar Facultades</h1>
+
+  <table class="min-w-full bg-white text-center">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">ID</th>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let faculty of faculties">
+        <td class="py-2 px-4 border-b">{{ faculty.id }}</td>
+        <td class="py-2 px-4 border-b">{{ faculty.nombre }}</td>
+        <td class="py-2 px-4 border-b">
+          <button (click)="editFaculty(faculty.id)" class="bg-blue-500 text-white px-3 py-1 rounded-md">Editar</button>
+          <button (click)="confirmDelete(faculty.id)" class="bg-red-500 text-white px-3 py-1 rounded-md ml-2">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-start mt-4">
+    <button (click)="addFaculty()" class="bg-green-500 text-white px-4 py-2 rounded-md">Añadir Facultad</button>
+  </div>
+</div>
+
+<app-faculty-modal *ngIf="showModal" [faculty]="selectedFaculty" [isEditMode]="isEditMode" (closeModal)="handleCloseModal()" (saveFaculty)="saveFaculty($event)"></app-faculty-modal>
+
+<app-confirm-modal *ngIf="showConfirmModal" (confirm)="deleteFaculty()" (cancel)="handleCloseConfirmModal()"></app-confirm-modal>
+
+<!-- Toast Notification -->
+<div *ngIf="toastMessage" [ngClass]="toastClass" class="toast">
+  {{ toastMessage }}
+</div>

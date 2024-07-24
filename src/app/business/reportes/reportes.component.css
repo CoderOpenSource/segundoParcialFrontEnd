@@ -1,0 +1,177 @@
+/* reportes.component.css */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.75rem;
+  color: #343a40;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  color: #495057;
+}
+
+select.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-block {
+  width: 100%;
+}
+
+button.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+button.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+button.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+button.btn-success:hover {
+  background-color: #218838;
+}
+
+button.btn-warning {
+  background-color: #ffc107;
+  color: white;
+}
+
+button.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+button.btn-danger:hover {
+  background-color: #c82333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #dee2e6;
+}
+
+th {
+  background-color: #343a40;
+  color: white;
+}
+
+a.btn-sm {
+  margin-right: 5px;
+}
+
+button.btn-sm {
+  margin-right: 5px;
+}
+
+.btn-yellow {
+  background-color: #ffc107; /* Color amarillo */
+  border: 1px solid #ffc107;
+  color: black; /* Color del texto */
+  font-weight: bold;
+  padding: 0.5rem 1rem; /* Aumenta el padding para hacer el botón más grande */
+  border-radius: 0.25rem; /* Añade bordes redondeados */
+  text-transform: uppercase; /* Transforma el texto a mayúsculas */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Añade una sombra */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  display: inline-block; /* Asegura que el botón se comporte como un elemento inline-block */
+  text-align: center; /* Centra el texto dentro del botón */
+  margin-right: 0.5rem; /* Añade margen a la derecha para espacio entre botones */
+
+}
+
+.btn-yellow:hover {
+  background-color: #e0a800; /* Color amarillo oscuro para el hover */
+  border-color: #d39e00;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más grande en hover */
+  color: rgb(10, 2, 56); /* Asegura que el color del texto se mantenga negro */
+  text-decoration: none; /* Elimina el subrayado en enlaces */
+}
+
+
+.btn-danger {
+  background-color: red;
+  color: white;
+}
+
+/* Estilos del modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(11, 2, 55, 0.4);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content p {
+  margin: 20px 0;
+}
+
+.modal-content button {
+  margin-right: 10px;
+}
